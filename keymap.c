@@ -84,16 +84,16 @@ enum {
 /* tapping term per key */
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LALT_T(KC_J):
+        case LALT_T(KC_Q):
             return 300;
-        case LGUI_T(KC_Q):
+        case LGUI_T(KC_K):
             return 300;
         case LCTL_T(KC_Z):
             return 300;
         case TD(CM_BRAK):
-            return 100;
+            return 125;
         case TD(PD_BRAK):
-            return 100;
+            return 125;
         default:
             return TAPPING_TERM;
     }
@@ -201,8 +201,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      | ALL  | SAVE |      | FIND |      |      |  +   |      |      |  ;   |  '   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      | UNDO | CUT  | COPY |PASTE |      |      |  -   | ,/<  |  ./> |  /   |  \   |m,./
- * |------+------+------+------+------+------+------+------+------+------+------+------|././././.,,./,./,./,./,./,./
+ * |      | UNDO | CUT  | COPY |PASTE |      |      |  -   | ,/<  |  ./> |  /   |  \   |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      | SPC    LSFT |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
@@ -234,9 +234,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Mods
  * ,-----------------------------------------------------------------------------------.
- * |Alt   |CtlSft|CtlAlt|CtSfAl|      |      |      |      |      |      |      |      |
+ * |Alt   |CtlAlt|CtlSft|CtSfAl|      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |SftAlt|GuiSft|GuiAlt|GuSfAl|      |      |      |      |      |      |      |      |
+ * |SftAlt|GuiAlt|GuiSft|GuSfAl|      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |Ctl   |GUI   |CtGu  |Hyper |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -245,8 +245,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_MODS] = LAYOUT_ortho_4x12(
-  OSM(MOD_LALT),            OSM(MOD_LSFT | MOD_LCTL), OSM(MOD_LCTL | MOD_LALT),  OSM(MOD_MEH),                         _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
-  OSM(MOD_LSFT | MOD_LALT), OSM(MOD_LSFT | MOD_LGUI), OSM(MOD_LGUI | MOD_LALT),  OSM(MOD_LSFT | MOD_LALT | MOD_LGUI),  _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
+  OSM(MOD_LALT),            OSM(MOD_LALT | MOD_LCTL), OSM(MOD_LCTL | MOD_LSFT),  OSM(MOD_MEH),                         _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
+  OSM(MOD_LSFT | MOD_LALT), OSM(MOD_LALT | MOD_LGUI), OSM(MOD_LGUI | MOD_LSFT),  OSM(MOD_LSFT | MOD_LALT | MOD_LGUI),  _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
   OSM(MOD_LCTL),            OSM(MOD_LGUI),            OSM(MOD_LCTL | MOD_LGUI),   OSM(MOD_HYPR),                        _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
   _______,  _______,  _______, _______,                                                                                _______,    KC_SPC,   KC_LSFT,      _______,  _______,  _______,  _______, _______
 ),
