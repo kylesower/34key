@@ -1,5 +1,8 @@
 #include QMK_KEYBOARD_H
 
+#ifdef LAYOUT_PRINTER
+#include "test_header.h"//"layout_print.h"
+#endif
 
 
 bool is_mac = true;
@@ -516,6 +519,12 @@ void copy_line(void){
   send_end();
 }
 
+void print_layout(void){
+    #ifdef LAYOUT_PRINTER
+        send_unicode_string(my_layout);
+    #endif
+}
+
 
 /* Leader key config */
 void leader_start_user(void) {
@@ -566,6 +575,10 @@ void leader_end_user(void) {
           SEND_STRING(SS_TAP(X_DOWN));
         }
     } 
+    else if (leader_sequence_three_keys(KC_L, KC_A, KC_Y)) {
+        // Leader, c, t => cut line
+        print_layout();
+    }
 }
 
 

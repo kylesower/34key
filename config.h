@@ -37,3 +37,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MOUSEKEY_ACCELERATED_SPEED 1500
 #define LEADER_PER_KEY_TIMING 125
 #define LEADER_NO_TIMEOUT
+#define LAYOUT_PRINTER
+#define UNICODE_SELECTED_MODES UNICODE_MODE_LINUX
