@@ -64,7 +64,7 @@ def format_layer_lines(name, data):
 						new_lines += '│zxzxz'
 
 		if line_num not in [0,4]:
-			new_lines += '|zxzxz'
+			new_lines += '│zxzxz'
 			if line_num == 3:
 				new_lines += "└─────────┴─────────┴─────────┴─────────┼─────────┼─────────┐    ┌─────────┼─────────┼─────────┴─────────┴─────────┴─────────┘zxzxz"
 			else:
@@ -75,19 +75,40 @@ def format_layer_lines(name, data):
 	return new_lines
 
 
+def convert_to_basic(uni):
+	dump = ""
+	for line in uni[:-1].split(','):
+		new_line = line.replace('┌─',',-').replace('┼','+').replace('┴','-').replace('─┐','-.').replace('│','|')
+		new_line = new_line.replace('└─','`-').replace('─┘','-\'').replace('┬','-').replace('─','-').replace('┤','|').replace('├','|')
+		dump += new_line.replace('"','') + '\\n'
+	return dump
+	
+
 def make_pretty(names, contents):
 	dump = ""
 	for i, layer in enumerate(contents):
 		layer_lines = layer.replace(' ', '').split('zxzxz')
 		layer_data = format_layer_lines(names[i], layer_lines)
-		dump += layer_data.replace('zxzxz', '\\n') + '\\n\\n'
+		#dump += layer_data.replace('zxzxz', '\n')
+		layer_data = layer_data.split('zxzxz')
+		for line_num, line in enumerate(layer_data):
+			dump += '"' + line + '",'
 	print(dump)
 	return dump
 
+
 def write_header(formatted_string, outfile):
-	with open(outfile, 'w+') as f:
-		f.write('#ifndef LAYOUT_PRINT_H\n#define LAYOUT_PRINT_H\n    char* my_layout = "')
-		f.write(formatted_string)
+	with open(outfile, 'w+', encoding="utf-8") as f:
+		num_lines = formatted_string.count(',') + 1
+		f.write('#ifndef LAYOUT_PRINT_H\n#define LAYOUT_PRINT_H\n')
+		f.write(f'    const int layout_length = {num_lines};\n')
+		f.write(f'    char *my_layout[{num_lines}] = ')
+		f.write('{')
+		f.write(formatted_string[:-1])
+		f.write('};\n')
+		f.write('    char *basic_layout = "')
+		basic = convert_to_basic(formatted_string)
+		f.write(basic[:-2])
 		f.write('";\n#endif')
 
 names, contents = parse_keymap(keymap_path)
