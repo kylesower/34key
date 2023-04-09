@@ -201,7 +201,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                         `-------------------'    `-------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12(
-  KC_GRV,  KC_AMPR,  KC_ASTR,  _______, _______,     _______,  _______,      _______,     KC_7,     KC_8,    KC_9,   KC_BSPC,
+  KC_GRV,  KC_AMPR,  KC_ASTR,  KC_TILD, _______,     _______,  _______,      KC_EQUAL,    KC_7,     KC_8,    KC_9,   KC_BSPC,
   KC_ESC,  KC_DLR,   KC_PERC,  KC_CIRC, _______,     _______,  _______,      KC_PLUS,     KC_4,     KC_5,    KC_6,   KC_0,
   _______, KC_EXLM,  KC_AT,    KC_HASH, KC_EQUAL,    _______,  _______,      KC_MINUS,    KC_1,     KC_2,    KC_3,   DEL,
   _______, _______, _______, _______, _______,       KC_SPC,   KC_LSFT,      _______,  _______,  _______,  _______,   _______
@@ -239,8 +239,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                         `-------------------'    `-------------------'
  */
 [_MISC] =  LAYOUT_ortho_4x12(
-  _______, _______, QK_LEAD, OSL(_MODS), REDO,        _______, _______,       _______,   _______,      _______,     _______,   _______,
-  ALL,     _______, SAVE,    _______,    FIND,        _______, _______,       _______,   _______,      _______,     KC_SCLN,   KC_QUOT,
+  _______, _______, QK_LEAD, OSL(_MODS), REDO,        _______, _______,       _______,   KC_QUES,      KC_PIPE,     KC_COLN,   KC_DQUO,
+  ALL,     _______, SAVE,    _______,    FIND,        _______, _______,       _______,   KC_SLSH,      KC_BSLS,     KC_SCLN,   KC_QUOT,
   _______, UNDO,    CUT,     COPY,       PASTE,       _______, _______,       _______,   KC_COMM,      KC_DOT,      KC_SLSH,   KC_BSLS,
   _______, _______, _______, _______,    _______,     KC_SPC,  KC_LSFT,       _______,   _______,      _______,     _______,   _______
 ),

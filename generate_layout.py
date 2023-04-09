@@ -7,6 +7,42 @@ header_file = 'test_header.h'
 keymap_path = os.path.join(curr_dir, keymap_file)
 outfile = os.path.join(curr_dir, header_file)
 
+keys = {
+'SLSH': '/',
+'BSLS': '\\\\',
+'PIPE': '|',
+'QUES': '?',
+'COMM': ',',
+'DOT': '.',
+'SCLN': ';',
+'COLN': ':',
+'QUOT': "'",
+'DQUO': '\\"',
+'UNDS': '_',
+'MINUS': '-',
+'PLUS': '+',
+'GRV': '`',
+'AMPR': '&',
+'ASTR': '*',
+'TILD': '~',
+'DLR': '$',
+'PERC': '%',
+'CIRC': '^',
+'EXLM': '!',
+'AT': '@',
+'HASH': '#',
+'EQUAL': '=',
+'LBRC': '[',
+'RBRC': ']',
+'LABK': '<',
+'RABK': '>',
+'LPRN': '(',
+'RPRN': ')',
+'LCBR': '{',
+'RCBR': '}'
+}
+
+
 def parse_keymap(file):
 	with open(file, 'r') as f:
 		data = f.read().replace('\n','zxzxz')
@@ -35,7 +71,8 @@ def format_layer_lines(name, data):
 			letter = letter.replace('_______', '         ')
 			letter = letter.replace('XXXXXXX', '         ')
 			letter = letter.replace('TL_', '')
-			#print(letter)
+			if letter in keys.keys():
+				letter = keys[letter]
 			match = re.findall('\((.*)\)', letter)
 			if match:
 				letter = match[0].replace('_', '')
@@ -44,6 +81,8 @@ def format_layer_lines(name, data):
 				if l not in [5, 6] and l < 12:
 					new_lines += '│'
 					empty_num = space_size - len(letter)
+					if letter.startswith('\\'):
+						letter = ' ' + letter
 					new_lines += ' '*(empty_num//2) + letter + ' '*(empty_num//2) + ' '*(empty_num % 2)
 				if l == 5:
 					new_lines += '│                        '
@@ -77,10 +116,14 @@ def format_layer_lines(name, data):
 
 def convert_to_basic(uni):
 	dump = ""
-	for line in uni[:-1].split(','):
+	for line in uni[:-1].split('","'):
 		new_line = line.replace('┌─',',-').replace('┼','+').replace('┴','-').replace('─┐','-.').replace('│','|')
 		new_line = new_line.replace('└─','`-').replace('─┘','-\'').replace('┬','-').replace('─','-').replace('┤','|').replace('├','|')
-		dump += new_line.replace('"','') + '\\n'
+		if new_line.startswith('"'):
+			new_line = new_line[1:]
+		elif new_line.endswith('"'):
+			new_line = new_line[:-1]
+		dump += new_line + '\\n'
 	return dump
 	
 
