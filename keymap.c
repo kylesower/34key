@@ -105,6 +105,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return 125;
         case LCTL_T(KC_TAB):
             return 300;
+        case LGUI_T(KC_X):
+            return 300;
         default:
             return TAPPING_TERM;
     }
@@ -153,37 +155,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* MAIN
 ,-------------------------------------------------.                        ,-------------------------------------------------.
 |    Q    |    W    |    F    |    P    |    G    |                        |    J    |    M    |    U    |    Y    |  BSPC   |
-|---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|arstrastarst
+|---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
 |    A    |    R    |    S    |    T    |    D    |                        |    H    |    N    |    E    |    I    |    O    |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|  MISC   |    X    |    C    |    V    |    B    |                        |    Z    |    L    |    K    |   TAB   |   ENT   |
+|  MISC   |  X/GUI  |    C    |    V    |    B    |                        |    Z    |    L    |    K    |Tab/Ctrl |   ENT   |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |  LOWER  |   SPC   |    |  LSFT   |  RAISE  |
                                         `-------------------'    `-------------------'
  */
 [_MAIN] = LAYOUT_ortho_4x12(
-  KC_Q,      KC_W,    KC_F,    KC_P,    KC_G,    _______,  _______,      KC_J,         KC_M,         KC_U,      KC_Y,            KC_BSPC,
-  KC_A,      KC_R,    KC_S,    KC_T,    KC_D,    _______,  _______,      KC_H,         KC_N,         KC_E,      KC_I,            KC_O,
-  MO(_MISC), KC_X,    KC_C,    KC_V,    KC_B,    _______,  _______,      KC_Z,         KC_L,         KC_K,      LCTL_T(KC_TAB),  KC_ENT,
-  _______,   _______, _______, _______, LOWER,   KC_SPC,   KC_LSFT,      RAISE,        _______,      _______,   _______,         _______
+  KC_Q,      KC_W,            KC_F,    KC_P,    KC_G,    _______,  _______,      KC_J,         KC_M,         KC_U,      KC_Y,            KC_BSPC,
+  KC_A,      KC_R,            KC_S,    KC_T,    KC_D,    _______,  _______,      KC_H,         KC_N,         KC_E,      KC_I,            KC_O,
+  MO(_MISC), LGUI_T(KC_X),    KC_C,    KC_V,    KC_B,    _______,  _______,      KC_Z,         KC_L,         KC_K,      LCTL_T(KC_TAB),  KC_ENT,
+  _______,   _______,         _______, _______, LOWER,   KC_SPC,   KC_LSFT,      RAISE,        _______,      _______,   _______,         _______
 ),
 
 /* LOWER
 ,-------------------------------------------------.                        ,-------------------------------------------------.
 |   TAB   |  CAPS   |  LCTL   |  LALT   |  LGUI   |                        |         |         |  LBRC   |  RBRC   |  BSPC   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|   ESC   |    Q    |   HM    |   UP    |   ED    |                        |  UNDS   |         |         |  LCBR   |  RCBR   |
+|   ESC   |   HM    |   UP    |   ED    |         |                        |  UNDS   |  LPRN   |  RPRN   |  LCBR   |  RCBR   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |         |  LEFT   |  DOWN   |  RGHT   |                        |         |  VOLD   |  VOLU   |  MUTE   |   DEL   |
+|         |  LEFT   |  DOWN   |  RGHT   |         |                        |         |    <    |    >    |    [    |    ]    |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |   SPC   |    |  LSFT   |         |
                                         `-------------------'    `-------------------'
  */
 [_LOWER] = LAYOUT_ortho_4x12(
-  KC_TAB,  KC_CAPS,  KC_LCTL,  KC_LALT, KC_LGUI,        _______,  _______,        _______,  _______, KC_LBRC, KC_RBRC,  KC_BSPC,
-  KC_ESC,  HM,       KC_UP,    ED,      KC_Q,          _______,  _______,        KC_UNDS,  KC_LPRN, KC_RPRN, KC_LCBR,  KC_RCBR,
-  _______, KC_LEFT,  KC_DOWN,  KC_RGHT, _______,       _______,  _______,        _______,  KC_VOLD, KC_VOLU, KC_MUTE,  DEL,
-  _______, _______,  _______,  _______, _______,      KC_SPC,   KC_LSFT,        _______,  _______, _______, _______,  _______
+  KC_TAB,  KC_CAPS,  KC_LCTL,  KC_LALT, KC_LGUI,       _______,  _______,        _______,  _______, KC_LBRC, KC_RBRC,  KC_BSPC,
+  KC_ESC,  HM,       KC_UP,    ED,      _______,       _______,  _______,        KC_UNDS,  KC_LPRN, KC_RPRN, KC_LCBR,  KC_RCBR,
+  _______, KC_LEFT,  KC_DOWN,  KC_RGHT, _______,       _______,  _______,        _______,  KC_LABK, KC_RABK, KC_LBRC,  KC_RBRC,
+  _______, _______,  _______,  _______, _______,       KC_SPC,   KC_LSFT,        _______,  _______, _______, _______,  _______
 ),
 
 
@@ -207,7 +209,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* ADJUST
 ,-------------------------------------------------.                        ,-------------------------------------------------.
-|         |   F1    |   F2    |   F3    |   F4    |                        |         |  MAIN   | COLEMAK | CG_SWAP | CG_NORM |
+|         |   F1    |   F2    |   F3    |   F4    |                        |         |         |         | CG_SWAP | CG_NORM |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
 |         |   F5    |   F6    |   F7    |   F8    |                        | RBTVAR  |         |         | SCRSHT  |  MOUSE  |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
@@ -217,7 +219,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                         `-------------------'    `-------------------'
  */
 [_ADJUST] =  LAYOUT_ortho_4x12(
-  _______, KC_F1,   KC_F2,     KC_F3,   KC_F4,      _______, _______,         _______,   _______,  _______,  CG_SWAP,    CG_NORM,
+  _______, KC_F1,   KC_F2,     KC_F3,   KC_F4,      _______, _______,         KC_VOLD,   KC_VOLU,  KC_MUTE,  CG_SWAP,    CG_NORM,
   _______, KC_F5,   KC_F6,     KC_F7,   KC_F8,      _______, _______,         RBTVAR,    _______,  _______,  SCRSHT,     MOUSE,
   _______, KC_F9,   KC_F10,    KC_F11,  KC_F12,     _______, _______,         RBTNEWVAR, _______,  _______,  SCRSHTSV,   DOCMD,
   _______, _______, _______,   _______, _______,    _______, _______,         _______,   _______,  _______,  _______,    _______
@@ -229,9 +231,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ,-------------------------------------------------.                        ,-------------------------------------------------.
 |         |         | QK_LEAD |  MODS   |  REDO   |                        |         |         |         |         |         |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |   ALL   |  SAVE   |         |  FIND   |                        |  PLUS   |         |         |  SCLN   |  QUOT   |
+|   ALL   |         |  SAVE   |         |  FIND   |                        |         |         |         |  SCLN   |  QUOT   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |  UNDO   |   CUT   |  COPY   |  PASTE  |                        |  MINUS  |  COMM   |   DOT   |  SLSH   |  BSLS   | 
+|         |  UNDO   |   CUT   |  COPY   |  PASTE  |                        |         |  COMM   |   DOT   |  SLSH   |  BSLS   | 
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |   SPC   |    |  LSFT   |         |
                                         `-------------------'    `-------------------'
@@ -248,7 +250,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ,-------------------------------------------------.                        ,-------------------------------------------------.
 |         | AltCtl  | CtlSft  |   MEH   |   Alt   |                        |         |         |         |         |         |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         | AltGUI  | GUISft  |SftAltGUI|   |                        |         |         |         |         |         |
+|         | AltGUI  | GUISft  |SftAltGUI|         |                        |         |         |         |         |         |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
 |         | SftAlt  | CtlGUI  |  HYPR   |   Ctl   |                        |         |         |         |         |         |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
@@ -257,10 +259,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_MODS] = LAYOUT_ortho_4x12(
-  _______, OSM(MOD_LCTL),   OSM(MOD_LALT | MOD_LCTL), OSM(MOD_LCTL | MOD_LSFT),  OSM(MOD_MEH),                                        _______,  _______,      _______,  _______,  _______,  _______, _______,
-  _______, OSM(MOD_LALT),   OSM(MOD_LALT | MOD_LGUI), OSM(MOD_LGUI | MOD_LSFT),  OSM(MOD_LSFT | MOD_LALT | MOD_LGUI),      _______,  _______,      _______,  _______,  _______,  _______, _______,
-  _______, OSM(MOD_LGUI),   OSM(MOD_LSFT | MOD_LALT), OSM(MOD_LCTL | MOD_LGUI),  OSM(MOD_HYPR),                            _______,  _______,      _______,  _______,  _______,  _______, _______,
-  _______,  _______,  _______, _______,                                                                                _______,    KC_SPC,   KC_LSFT,      _______,  _______,  _______,  _______, _______
+  OSM(MOD_LCTL), OSM(MOD_LALT | MOD_LCTL), OSM(MOD_LCTL | MOD_LSFT),  OSM(MOD_MEH),                        _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
+  OSM(MOD_LGUI), OSM(MOD_LALT | MOD_LGUI), OSM(MOD_LGUI | MOD_LSFT),  OSM(MOD_LSFT | MOD_LALT | MOD_LGUI), _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
+  _______,       OSM(MOD_LALT),            OSM(MOD_LSFT | MOD_LALT),  _______,                             _______,    _______,  _______,      _______,  _______,  _______,  _______, _______, 
+  _______,       _______,                  _______,                   _______,                             _______,    KC_SPC,   KC_LSFT,      _______,  _______,  _______,  _______, _______
 ),
 
 
@@ -535,54 +537,58 @@ void leader_start_user(void) {
 
 void leader_end_user(void) {
     if (leader_sequence_two_keys(KC_C, KC_T)) {
-        // Leader, c, t => cut line
       cut_line();
     }
     else if (leader_sequence_two_keys(KC_C, KC_Y)){
       copy_line();       
     }
-    else if (leader_sequence_one_key(KC_U)) {
-        // Leader, c, t => cut line
+    else if (leader_sequence_one_key(KC_L)) {
+      SEND_STRING("Log to Console    ");
+    }
+    else if (leader_sequence_two_keys(KC_S, KC_E)) {
+      SEND_STRING("Set Test Variable    ${}    ${}");
+      for (int j = 0; j < 8; j++){
+        tap_code(KC_LEFT);
+      }
+    }
+    else if (leader_sequence_two_keys(KC_C, KC_O)) {
+      SEND_STRING("Control Window    ${}");
+      tap_code(KC_LEFT);
+    }
+    else if (leader_sequence_one_key(KC_S)) {
         for (int i = 0; i < 20; i++){
           SEND_STRING(SS_TAP(X_UP));
         }
     }
-    else if (leader_sequence_two_keys(KC_U, KC_U)) {
-        // Leader, c, t => cut
+    else if (leader_sequence_two_keys(KC_S, KC_S)) {
         for (int i = 0; i < 100; i++){
           SEND_STRING(SS_TAP(X_UP));
         }
     }
-    else if (leader_sequence_three_keys(KC_U, KC_U, KC_U)) {
-        // Leader, c, t => cut line
+    else if (leader_sequence_three_keys(KC_S, KC_S, KC_S)) {
         for (int i = 0; i < 250; i++){
           SEND_STRING(SS_TAP(X_UP));
         }
     } 
-    else if (leader_sequence_one_key(KC_D)) {
-        // Leader, c, t => cut line
+    else if (leader_sequence_one_key(KC_C)) {
         for (int i = 0; i < 20; i++){
           SEND_STRING(SS_TAP(X_DOWN));
         }
     }
-    else if (leader_sequence_two_keys(KC_D, KC_D)) {
-        // Leader, c, t => cut line
+    else if (leader_sequence_two_keys(KC_C, KC_C)) {
         for (int i = 0; i < 100; i++){
           SEND_STRING(SS_TAP(X_DOWN));
         }
     } 
-    else if (leader_sequence_three_keys(KC_D, KC_D, KC_D)) {
-        // Leader, c, t => cut line
+    else if (leader_sequence_three_keys(KC_C, KC_C, KC_C)) {
         for (int i = 0; i < 250; i++){
           SEND_STRING(SS_TAP(X_DOWN));
         }
     } 
     else if (leader_sequence_three_keys(KC_L, KC_A, KC_Y)) {
-        // Leader, c, t => cut line
         print_layout();
     }
     else if (leader_sequence_four_keys(KC_L, KC_A, KC_Y, KC_P)) {
-        // Leader, c, t => cut line
         print_layout_pretty();
     }
 }
