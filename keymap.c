@@ -1,7 +1,7 @@
 #include QMK_KEYBOARD_H
 
 #ifdef LAYOUT_PRINTER
-#include "test_header.h"//"layout_print.h"//
+#include "layout.h"//
 #endif
 
 
@@ -172,17 +172,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* LOWER
 ,-------------------------------------------------.                        ,-------------------------------------------------.
-|   TAB   |  CAPS   |  LCTL   |  LALT   |  LGUI   |                        |         |         |  LBRC   |  RBRC   |  BSPC   |
+|   TAB   |  CAPS   |  LCTL   |  LALT   |  LGUI   |                        |         |         |         |         |  BSPC   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|   ESC   |   HM    |   UP    |   ED    |         |                        |  UNDS   |  LPRN   |  RPRN   |  LCBR   |  RCBR   |
+|   ESC   |   HM    |   UP    |   ED    |         |                        |    _    |    (    |    )    |    {    |    }    |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |  LEFT   |  DOWN   |  RGHT   |         |                        |         |  LABK   |  RABK   |  LBRC   |  RBRC   |
+|         |  LEFT   |  DOWN   |  RGHT   |         |                        |         |    <    |    >    |    [    |    ]    |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |   SPC   |    |  LSFT   |         |
                                         `-------------------'    `-------------------'
  */
 [_LOWER] = LAYOUT_ortho_4x12(
-  KC_TAB,  KC_CAPS,  KC_LCTL,  KC_LALT, KC_LGUI,       _______,  _______,        _______,  _______, KC_LBRC, KC_RBRC,  KC_BSPC,
+  KC_TAB,  KC_CAPS,  KC_LCTL,  KC_LALT, KC_LGUI,       _______,  _______,        _______,  _______, _______, _______,  KC_BSPC,
   KC_ESC,  HM,       KC_UP,    ED,      _______,       _______,  _______,        KC_UNDS,  KC_LPRN, KC_RPRN, KC_LCBR,  KC_RCBR,
   _______, KC_LEFT,  KC_DOWN,  KC_RGHT, _______,       _______,  _______,        _______,  KC_LABK, KC_RABK, KC_LBRC,  KC_RBRC,
   _______, _______,  _______,  _______, _______,       KC_SPC,   KC_LSFT,        _______,  _______, _______, _______,  _______
@@ -191,20 +191,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* RAISE
 ,-------------------------------------------------.                        ,-------------------------------------------------.
-|   GRV   |  AMPR   |  ASTR   |         |         |                        |         |    7    |    8    |    9    |  BSPC   |
+|    `    |    &    |    *    |    ~    |         |                        |         |    7    |    8    |    9    |  BSPC   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|   ESC   |   DLR   |  PERC   |  CIRC   |         |                        |  PLUS   |    4    |    5    |    6    |    0    |
+|   ESC   |    $    |    %    |    ^    |         |                        |    +    |    4    |    5    |    6    |    0    |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |  EXLM   |   AT    |  HASH   |  EQUAL  |                        |  MINUS  |    1    |    2    |    3    |   DEL   |
+|         |    !    |    @    |    #    |         |                        |    -    |    1    |    2    |    3    |    =    |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |   SPC   |    |  LSFT   |         |
                                         `-------------------'    `-------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12(
-  KC_GRV,  KC_AMPR,  KC_ASTR,  KC_TILD, _______,     _______,  _______,      KC_EQUAL,    KC_7,     KC_8,    KC_9,   KC_BSPC,
+  KC_GRV,  KC_AMPR,  KC_ASTR,  KC_TILD, _______,     _______,  _______,      _______,    KC_7,     KC_8,    KC_9,   KC_BSPC,
   KC_ESC,  KC_DLR,   KC_PERC,  KC_CIRC, _______,     _______,  _______,      KC_PLUS,     KC_4,     KC_5,    KC_6,   KC_0,
-  _______, KC_EXLM,  KC_AT,    KC_HASH, KC_EQUAL,    _______,  _______,      KC_MINUS,    KC_1,     KC_2,    KC_3,   DEL,
-  _______, _______, _______, _______, _______,       KC_SPC,   KC_LSFT,      _______,  _______,  _______,  _______,   _______
+  _______, KC_EXLM,  KC_AT,    KC_HASH, _______,    _______,  _______,      KC_MINUS,    KC_1,     KC_2,    KC_3,   KC_EQUAL,
+  _______, _______, _______, _______, _______,       KC_SPC,   KC_LSFT,      _______,     _______,  _______, _______,_______
 ),
 
 /* ADJUST
@@ -229,19 +229,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* MISC
 ,-------------------------------------------------.                        ,-------------------------------------------------.
-|         |         | QK_LEAD |  MODS   |  REDO   |                        |         |         |         |         |         |
+|         |         | QK_LEAD |  MODS   |  REDO   |                        |         |    ?    |    |    |         |  BSPC   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|   ALL   |         |  SAVE   |         |  FIND   |                        |         |         |         |  SCLN   |  QUOT   |
+|   ALL   |         |  SAVE   |         |  FIND   |                        |         |    /    |    \    |    ;    |    '    |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |  UNDO   |   CUT   |  COPY   |  PASTE  |                        |         |  COMM   |   DOT   |  SLSH   |  BSLS   |
+|         |  UNDO   |   CUT   |  COPY   |  PASTE  |                        |         |    ,    |    .    |    :    |    "    |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |   SPC   |    |  LSFT   |         |
                                         `-------------------'    `-------------------'
  */
 [_MISC] =  LAYOUT_ortho_4x12(
-  _______, _______, QK_LEAD, OSL(_MODS), REDO,        _______, _______,       _______,   KC_QUES,      KC_PIPE,     KC_COLN,   KC_DQUO,
+  _______, _______, QK_LEAD, OSL(_MODS), REDO,        _______, _______,       _______,   KC_QUES,      KC_PIPE,     _______,   KC_BSPC,
   ALL,     _______, SAVE,    _______,    FIND,        _______, _______,       _______,   KC_SLSH,      KC_BSLS,     KC_SCLN,   KC_QUOT,
-  _______, UNDO,    CUT,     COPY,       PASTE,       _______, _______,       _______,   KC_COMM,      KC_DOT,      KC_SLSH,   KC_BSLS,
+  _______, UNDO,    CUT,     COPY,       PASTE,       _______, _______,       _______,   KC_COMM,      KC_DOT,      KC_COLN,   KC_DQUO,
   _______, _______, _______, _______,    _______,     KC_SPC,  KC_LSFT,       _______,   _______,      _______,     _______,   _______
 ),
 
@@ -595,8 +595,9 @@ void leader_end_user(void) {
 
 
 
-
+uint8_t mod_state;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  mod_state = get_mods();
   switch (keycode) {
     case CG_SWAP:
       if (record->event.pressed) {
@@ -825,6 +826,47 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case KC_BSPC:
+        // Initialize a boolean variable that keeps track
+        // of the delete key status: registered or not?
+        {
+        static bool delkey_registered;
+        if (record->event.pressed) {
+            // Detect the activation of either shift keys
+            if (mod_state & MOD_MASK_SHIFT) {
+                // First temporarily canceling both shifts so that
+                // shift isn't applied to the KC_DEL keycode
+                del_mods(MOD_MASK_SHIFT);
+                if (is_mac){
+                    SEND_STRING(SS_DOWN(X_LCTL));
+                    SEND_STRING(SS_DOWN(X_D));
+                }
+                else {
+                    register_code(KC_DEL);
+                }
+                // Update the boolean variable to reflect the status of KC_DEL
+                delkey_registered = true;
+                // Reapplying modifier state so that the held shift key(s)
+                // still work even after having tapped the Backspace/Delete key.
+                set_mods(mod_state);
+                return false;
+            }
+        } else { // on release of KC_BSPC
+            // In case KC_DEL is still being sent even after the release of KC_BSPC
+            if (delkey_registered) {
+                if (is_mac){ 
+                  SEND_STRING(SS_UP(X_LCTL));
+                  SEND_STRING(SS_UP(X_D));
+                }
+                else{
+                  unregister_code(KC_DEL);
+                }
+                delkey_registered = false;
+                return false;
+            }
+        }
+        }
+        return true;
     case  DEL:
       if (record->event.pressed) {
         if (is_mac) {
