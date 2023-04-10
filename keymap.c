@@ -166,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MAIN] = LAYOUT_ortho_4x12(
   KC_Q,      KC_W,            KC_F,    KC_P,    KC_G,    _______,  _______,      KC_J,         KC_M,         KC_U,      KC_Y,            KC_BSPC,
   KC_A,      KC_R,            KC_S,    KC_T,    KC_D,    _______,  _______,      KC_H,         KC_N,         KC_E,      KC_I,            KC_O,
-  MO(_MISC), LGUI_T(KC_X),    KC_C,    KC_V,    KC_B,    _______,  _______,      KC_Z,         KC_L,         KC_K,      LCTL_T(KC_TAB),  KC_ENT,
+  MO(_MISC), LCTL_T(KC_X),    LALT_T(KC_C),    LGUI_T(KC_V),    KC_B,    _______,  _______,      KC_Z,         LGUI_T(KC_L),         LALT_T(KC_K),      LCTL_T(KC_TAB),  KC_ENT,
   _______,   _______,         _______, _______, LOWER,   KC_SPC,   KC_LSFT,      RAISE,        _______,      _______,   _______,         _______
 ),
 
@@ -212,16 +212,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 |         |   F1    |   F2    |   F3    |   F4    |                        |  VOLD   |  VOLU   |  MUTE   | CG_SWAP | CG_NORM |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
 |         |   F5    |   F6    |   F7    |   F8    |                        | RBTVAR  |         |         | SCRSHT  |  MOUSE  |
-|---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
+|---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------| "" 
 |         |   F9    |   F10   |   F11   |   F12   |                        |RBTNEWVAR|         |         |SCRSHTSV |  DOCMD  |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |         |    |         |         |
                                         `-------------------'    `-------------------'
  */
 [_ADJUST] =  LAYOUT_ortho_4x12(
-  _______, KC_F1,   KC_F2,     KC_F3,   KC_F4,      _______, _______,         KC_VOLD,   KC_VOLU,  KC_MUTE,  CG_SWAP,    CG_NORM,
-  _______, KC_F5,   KC_F6,     KC_F7,   KC_F8,      _______, _______,         RBTVAR,    _______,  _______,  SCRSHT,     MOUSE,
-  _______, KC_F9,   KC_F10,    KC_F11,  KC_F12,     _______, _______,         RBTNEWVAR, _______,  _______,  SCRSHTSV,   DOCMD,
+  KC_F1,   KC_F2,     KC_F3,   KC_F4,   _______,    _______, _______,         KC_VOLD,   KC_VOLU,  KC_MUTE,  CG_SWAP,    CG_NORM,
+  KC_F5,   KC_F6,     KC_F7,   KC_F8,   _______,    _______, _______,         RBTVAR,    _______,  _______,  SCRSHT,     MOUSE,
+  KC_F9,   KC_F10,    KC_F11,  KC_F12,  _______,    _______, _______,         RBTNEWVAR, _______,  _______,  SCRSHTSV,   DOCMD,
   _______, _______, _______,   _______, _______,    _______, _______,         _______,   _______,  _______,  _______,    _______
 ),
 
@@ -261,7 +261,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MODS] = LAYOUT_ortho_4x12(
   OSM(MOD_LCTL), OSM(MOD_LALT | MOD_LCTL), OSM(MOD_LCTL | MOD_LSFT),  OSM(MOD_MEH),                        _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
   OSM(MOD_LGUI), OSM(MOD_LALT | MOD_LGUI), OSM(MOD_LGUI | MOD_LSFT),  OSM(MOD_LSFT | MOD_LALT | MOD_LGUI), _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
-  _______,       OSM(MOD_LALT),            OSM(MOD_LSFT | MOD_LALT),  _______,                             _______,    _______,  _______,      _______,  _______,  _______,  _______, _______, 
+  _______,       OSM(MOD_LALT),            OSM(MOD_LALT | MOD_LSFT),  _______,                             _______,    _______,  _______,      _______,  _______,  _______,  _______, _______, 
   _______,       _______,                  _______,                   _______,                             _______,    KC_SPC,   KC_LSFT,      _______,  _______,  _______,  _______, _______
 ),
 
