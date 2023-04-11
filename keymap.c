@@ -184,7 +184,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER] = LAYOUT_ortho_4x12(
   KC_TAB,  KC_CAPS,  KC_LCTL,  KC_LALT, KC_LGUI,       _______,  _______,        _______,  _______, _______, _______,  KC_BSPC,
   KC_ESC,  HM,       KC_UP,    ED,      _______,       _______,  _______,        KC_UNDS,  KC_LPRN, KC_RPRN, KC_LCBR,  KC_RCBR,
-  _______, KC_LEFT,  KC_DOWN,  KC_RGHT, _______,       _______,  _______,        _______,  KC_LABK, KC_RABK, KC_LBRC,  KC_RBRC,
+  _______, KC_LEFT,  KC_DOWN,  KC_RGHT, _______,       _______,  _______,        KC_EQUAL,  KC_LABK, KC_RABK, KC_LBRC,  KC_RBRC,
   _______, _______,  _______,  _______, _______,       KC_SPC,   KC_LSFT,        _______,  _______, _______, _______,  _______
 ),
 
@@ -203,7 +203,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = LAYOUT_ortho_4x12(
   KC_GRV,  KC_AMPR,  KC_ASTR,  KC_TILD, _______,     _______,  _______,      _______,    KC_7,     KC_8,    KC_9,   KC_BSPC,
   KC_ESC,  KC_DLR,   KC_PERC,  KC_CIRC, _______,     _______,  _______,      KC_PLUS,     KC_4,     KC_5,    KC_6,   KC_0,
-  _______, KC_EXLM,  KC_AT,    KC_HASH, _______,    _______,  _______,      KC_MINUS,    KC_1,     KC_2,    KC_3,   KC_EQUAL,
+  _______, KC_EXLM,  KC_AT,    KC_HASH, _______,    _______,  _______,      KC_MINUS,    KC_1,     KC_2,    KC_3,   DEL,
   _______, _______, _______, _______, _______,       KC_SPC,   KC_LSFT,      _______,     _______,  _______, _______,_______
 ),
 
@@ -262,7 +262,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   OSM(MOD_LCTL), OSM(MOD_LALT | MOD_LCTL), OSM(MOD_LCTL | MOD_LSFT),  OSM(MOD_MEH),                        _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
   OSM(MOD_LGUI), OSM(MOD_LALT | MOD_LGUI), OSM(MOD_LGUI | MOD_LSFT),  OSM(MOD_LSFT | MOD_LALT | MOD_LGUI), _______,    _______,  _______,      _______,  _______,  _______,  _______, _______,
   _______,       OSM(MOD_LALT),            OSM(MOD_LALT | MOD_LSFT),  _______,                             _______,    _______,  _______,      _______,  _______,  _______,  _______, _______, 
-  _______,       _______,                  _______,                   _______,                             _______,    KC_SPC,   KC_LSFT,      _______,  _______,  _______,  _______, _______
+  _______,       _______,                  _______,                   _______,                             _______,    KC_SPC,   KC_LSFT,      RTRN,  _______,  _______,  _______, _______
 ),
 
 
@@ -298,8 +298,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_DOCMD] =  LAYOUT_ortho_4x12(
   _______, DELLN,   CPLN,      PSTUP,   _______,       _______,  _______,       REDO,    DELBAK,  _______,   DELFWD,   UNDO,
-  RTRN,    CUTLN,   JUMPUP,    PSTDN,   _______,       _______,  _______,       _______, CUTBAK,  MVLNUP,    CUTFWD,   CUT,
-  _______, JUMPLT,  JUMPDN,    JUMPRT,  _______,       _______,  _______,       COPY,    HLTBAK,  MVLNDN,    HLTFWD,   PASTE,
+  RTRN,    CUTLN,   KC_PGUP,    PSTDN,   _______,       _______,  _______,       _______, CUTBAK,  MVLNUP,    CUTFWD,   CUT,
+  _______, JUMPLT,  KC_PGDN,    JUMPRT,  _______,       _______,  _______,       COPY,    HLTBAK,  MVLNDN,    HLTFWD,   PASTE,
   _______, _______, _______,   _______, NAV,           KC_LSFT,  KC_LSFT,       RTRN,    _______,  _______,  _______,  _______
 ),
 
@@ -826,6 +826,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    /*
     case KC_BSPC:
         // Initialize a boolean variable that keeps track
         // of the delete key status: registered or not?
@@ -867,7 +868,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
         }
         return true;
-    case  DEL:
+        */
+    case DEL:
       if (record->event.pressed) {
         if (is_mac) {
           SEND_STRING(SS_DOWN(X_LCTL));
