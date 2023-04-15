@@ -13,35 +13,22 @@ bool is_mac = true;
 // entirely and just use numbers.
 enum layer_names {
     _MAIN,
-    _COLEMAK,
     _LOWER,
     _RAISE,
     _ADJUST,
-    _LOWER_COL,
-    _RAISE_COL,
-    _ADJUST_COL,
-    _SYM,
     _MISC,
     _MODS,
-    _MOUSE,
     _DOCMD,
     _NAV
 };
 
 enum custom_keycodes {
   MAIN = SAFE_RANGE,
-  COLEMAK,
   LOWER,
   RAISE,
   ADJUST,
-  MAC,
-  WIN,
-  SYM,
   MISC,
   MODS,
-  DBLBACK,
-  MOUSE,
-  MY_LEAD,
   DOCMD,
   NAV,
   RTRN,
@@ -82,38 +69,15 @@ enum custom_keycodes {
 };
 
 // Tap dance enums
+/*
 enum {
-    Q_CAP,
-    J_CAP,
-    Z_CAP,
-    PD_BRAK,
     CM_BRAK
 };
-
-/* tapping term per key */
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LALT_T(KC_Q):
-            return 300;
-        case LGUI_T(KC_K):
-            return 300;
-        case LCTL_T(KC_Z):
-            return 300;
-        case TD(CM_BRAK):
-            return 125;
-        case TD(PD_BRAK):
-            return 125;
-        case LCTL_T(KC_TAB):
-            return 300;
-        case LGUI_T(KC_X):
-            return 300;
-        default:
-            return TAPPING_TERM;
-    }
-}
+*/
 
 
 /* tap dance */
+/*
 typedef enum {
     TD_NONE,
     TD_UNKNOWN,
@@ -131,22 +95,11 @@ typedef struct {
     td_state_t state;
 } td_tap_t;
 
-
-
 td_state_t cur_dance(tap_dance_state_t *state);
 
-// For the x tap dance. Put it here so it can be used in any keymap
-void q_finished(tap_dance_state_t *state, void *user_data);
-void q_reset(tap_dance_state_t *state, void *user_data);
-void j_finished(tap_dance_state_t *state, void *user_data);
-void j_reset(tap_dance_state_t *state, void *user_data);
-void z_finished(tap_dance_state_t *state, void *user_data);
-void z_reset(tap_dance_state_t *state, void *user_data);
-void pd_finished(tap_dance_state_t *state, void *user_data);
-void pd_reset(tap_dance_state_t *state, void *user_data);
 void cm_finished(tap_dance_state_t *state, void *user_data);
 void cm_reset(tap_dance_state_t *state, void *user_data);
-
+*/
 
 
 
@@ -220,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] =  LAYOUT_ortho_4x12(
   KC_F1,   KC_F2,     KC_F3,   KC_F4,   _______,    _______, _______,         KC_VOLD,   KC_VOLU,  KC_MUTE,  CG_SWAP,    CG_NORM,
-  KC_F5,   KC_F6,     KC_F7,   KC_F8,   _______,    _______, _______,         RBTVAR,    _______,  _______,  SCRSHT,     MOUSE,
+  KC_F5,   KC_F6,     KC_F7,   KC_F8,   _______,    _______, _______,         RBTVAR,    _______,  _______,  SCRSHT,     _______,
   KC_F9,   KC_F10,    KC_F11,  KC_F12,  _______,    _______, _______,         RBTNEWVAR, _______,  _______,  SCRSHTSV,   DOCMD,
   _______, _______, _______,   _______, _______,    _______, _______,         _______,   _______,  _______,  _______,    _______
 ),
@@ -265,26 +218,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______,       _______,                  _______,                   _______,                             _______,    KC_SPC,   KC_LSFT,      RTRN,  _______,  _______,  _______, _______
 ),
 
-
-
-/* MOUSE
-,-------------------------------------------------.                        ,-------------------------------------------------.
-|         |  ACL0   |  ACL1   |  ACL2   |         |                        |         |         |  BTN3   |         |         |
-|---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|  RTRN   |         |  MS_U   |         |         |                        |         |  BTN1   |  BTN2   |  WH_U   |         |
-|---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |  MS_L   |  MS_D   |  MS_R   |         |                        |         |         |         |  WH_D   |         |
-`---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
-                                        |  RTRN   |   SPC   |    |  LSFT   |  RTRN   |
-                                        `-------------------'    `-------------------'
- */
-[_MOUSE] =  LAYOUT_ortho_4x12(
-  XXXXXXX, KC_ACL0, KC_ACL1, KC_ACL2, XXXXXXX,      _______,  _______,       XXXXXXX, XXXXXXX, KC_BTN3, XXXXXXX, XXXXXXX,
-  RTRN,    XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX,      _______,  _______,       XXXXXXX, KC_BTN1, KC_BTN2, KC_WH_U, XXXXXXX,
-  XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX,      _______,  _______,       XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_D, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, RTRN,         KC_SPC,   KC_LSFT,       RTRN,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
-),
-
 /* DOCMD
 ,-------------------------------------------------.                        ,-------------------------------------------------.
 |         |  DELLN  |  CPLN   |  PSTUP  |         |                        |  REDO   | DELBAK  |         | DELFWD  |  UNDO   |
@@ -325,34 +258,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-#ifdef AUDIO_ENABLE
-float tone_qwerty[][2]     = SONG(QWERTY_SOUND);
-float tone_dvorak[][2]     = SONG(DVORAK_SOUND);
-float tone_colemak[][2]    = SONG(COLEMAK_SOUND);
-#endif
-
-
-
-
-
 
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
   default_layer_set(default_layer);
 }
 
-/*
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case SFT_T(KC_SPC):
-            return TAPPING_TERM + 1250;
-        case LT(1, KC_GRV):
-            return 130;
-        default:
-            return TAPPING_TERM;
-    }
-}
-*/
 
 void send_home(void){
   if (is_mac){
@@ -595,9 +506,7 @@ void leader_end_user(void) {
 
 
 
-uint8_t mod_state;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  mod_state = get_mods();
   switch (keycode) {
     case CG_SWAP:
       if (record->event.pressed) {
@@ -609,35 +518,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         is_mac = false;
       }
       return true;
-    case MY_LEAD:
-      if (record->event.pressed) {
-        leader_start();
-      }
-      return false;
-    case MAIN:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(tone_colemak);
-        #endif
-        layer_clear();
-        set_single_persistent_default_layer(_MAIN);
-        
-        //layer_on(_MAIN);
-      }
-      return false;
-      break;
-    case COLEMAK:
-      if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(tone_colemak);
-        #endif
-        layer_clear();
-        set_single_persistent_default_layer(_COLEMAK);
-          
-          //layer_on(_COLEMAK);
-      }
-      return false;
-      break;
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
@@ -672,12 +552,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case MOUSE:
-      if (record->event.pressed) {
-        layer_on(_MOUSE);
-      }
-      return false;
-      break;
     case RTRN:
       if (record->event.pressed) {
         layer_clear();
@@ -690,18 +564,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_NAV);
       } else {
         layer_off(_NAV);
-      }
-      return false;
-      break;
-    case MAC:
-      if (record->event.pressed) {
-        is_mac = true;
-      }
-      return false;
-      break;
-    case WIN:
-      if (record->event.pressed) {
-        is_mac = false;
       }
       return false;
       break;
@@ -826,49 +688,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    /*
-    case KC_BSPC:
-        // Initialize a boolean variable that keeps track
-        // of the delete key status: registered or not?
-        {
-        static bool delkey_registered;
-        if (record->event.pressed) {
-            // Detect the activation of either shift keys
-            if (mod_state & MOD_MASK_SHIFT) {
-                // First temporarily canceling both shifts so that
-                // shift isn't applied to the KC_DEL keycode
-                del_mods(MOD_MASK_SHIFT);
-                if (is_mac){
-                    SEND_STRING(SS_DOWN(X_LCTL));
-                    SEND_STRING(SS_DOWN(X_D));
-                }
-                else {
-                    register_code(KC_DEL);
-                }
-                // Update the boolean variable to reflect the status of KC_DEL
-                delkey_registered = true;
-                // Reapplying modifier state so that the held shift key(s)
-                // still work even after having tapped the Backspace/Delete key.
-                set_mods(mod_state);
-                return false;
-            }
-        } else { // on release of KC_BSPC
-            // In case KC_DEL is still being sent even after the release of KC_BSPC
-            if (delkey_registered) {
-                if (is_mac){ 
-                  SEND_STRING(SS_UP(X_LCTL));
-                  SEND_STRING(SS_UP(X_D));
-                }
-                else{
-                  unregister_code(KC_DEL);
-                }
-                delkey_registered = false;
-                return false;
-            }
-        }
-        }
-        return true;
-        */
     case DEL:
       if (record->event.pressed) {
         if (is_mac) {
@@ -1055,7 +874,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 
-
+/*
 td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
         if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
@@ -1080,102 +899,10 @@ td_state_t cur_dance(tap_dance_state_t *state) {
 }
 
 // Create an instance of 'td_tap_t' for the 'x' tap dance.
-static td_tap_t qtap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-};
-
-static td_tap_t jtap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-};
-
-static td_tap_t ztap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-};
-
-static td_tap_t pdtap_state = {
-    .is_press_action = true,
-    .state = TD_NONE
-};
-
 static td_tap_t cmtap_state = {
     .is_press_action = true,
     .state = TD_NONE
 };
-
-void q_finished(tap_dance_state_t *state, void *user_data) {
-    qtap_state.state = cur_dance(state);
-    switch (qtap_state.state) {
-        case TD_SINGLE_TAP: register_code(KC_Q); break;
-        case TD_SINGLE_HOLD: register_code16(S(KC_Q)); break;
-        default: break;
-    }
-}
-
-void q_reset(tap_dance_state_t *state, void *user_data) {
-    switch (qtap_state.state) {
-        case TD_SINGLE_TAP: unregister_code(KC_Q); break;
-        case TD_SINGLE_HOLD: unregister_code16(S(KC_Q)); break;
-        default: break;
-    }
-    qtap_state.state = TD_NONE;
-}
-
-void j_finished(tap_dance_state_t *state, void *user_data) {
-    jtap_state.state = cur_dance(state);
-    switch (jtap_state.state) {
-        case TD_SINGLE_TAP: register_code(KC_J); break;
-        case TD_SINGLE_HOLD: register_code16(S(KC_J)); break;
-        default: break;
-    }
-}
-
-void j_reset(tap_dance_state_t *state, void *user_data) {
-    switch (jtap_state.state) {
-        case TD_SINGLE_TAP: unregister_code(KC_J); break;
-        case TD_SINGLE_HOLD: unregister_code16(S(KC_J)); break;
-        default: break;
-    }
-    jtap_state.state = TD_NONE;
-}
-
-void z_finished(tap_dance_state_t *state, void *user_data) {
-    ztap_state.state = cur_dance(state);
-    switch (ztap_state.state) {
-        case TD_SINGLE_TAP: register_code(KC_Z); break;
-        case TD_SINGLE_HOLD: register_code16(S(KC_Z)); break;
-        default: break;
-    }
-}
-
-void z_reset(tap_dance_state_t *state, void *user_data) {
-    switch (ztap_state.state) {
-        case TD_SINGLE_TAP: unregister_code(KC_Z); break;
-        case TD_SINGLE_HOLD: unregister_code16(S(KC_Z)); break;
-        default: break;
-    }
-    ztap_state.state = TD_NONE;
-}
-
-void pd_finished(tap_dance_state_t *state, void *user_data) {
-    pdtap_state.state = cur_dance(state);
-    switch (pdtap_state.state) {
-        case TD_SINGLE_TAP: register_code(KC_DOT); break;
-        case TD_SINGLE_HOLD: register_code16(S(KC_DOT)); break;
-        default: break;
-    }
-}
-
-void pd_reset(tap_dance_state_t *state, void *user_data) {
-    switch (pdtap_state.state) {
-        case TD_SINGLE_TAP: unregister_code(KC_DOT); break;
-        case TD_SINGLE_HOLD: unregister_code16(S(KC_DOT)); break;
-        default: break;
-    }
-    pdtap_state.state = TD_NONE;
-}
 
 void cm_finished(tap_dance_state_t *state, void *user_data) {
     cmtap_state.state = cur_dance(state);
@@ -1196,9 +923,6 @@ void cm_reset(tap_dance_state_t *state, void *user_data) {
 }
 
 tap_dance_action_t tap_dance_actions[] = {
-    [Q_CAP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, q_finished, q_reset),
-    [J_CAP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, j_finished, j_reset),
-    [Z_CAP] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, z_finished, z_reset),
-    [PD_BRAK] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, pd_finished, pd_reset),
     [CM_BRAK] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cm_finished, cm_reset),
 };
+*/
