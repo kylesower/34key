@@ -3,7 +3,7 @@ import re
 
 curr_dir = os.getcwd()
 keymap_file = 'keymap.c'
-header_file = 'test_header.h'
+header_file = 'layout.h'
 keymap_path = os.path.join(curr_dir, keymap_file)
 outfile = os.path.join(curr_dir, header_file)
 
