@@ -17,9 +17,6 @@ enum layer_names {
     _RAISE,
     _ADJUST,
     _MISC,
-    _MODS,
-    _DOCMD,
-    _NAV
 };
 
 enum custom_keycodes {
@@ -28,9 +25,6 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   MISC,
-  MODS,
-  DOCMD,
-  NAV,
   RTRN,
   HM,
   ED,
@@ -71,13 +65,19 @@ enum custom_keycodes {
 // Tap dance enums
 /*
 enum {
-    CM_BRAK
+  MISC_MAC
 };
-*/
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TD(MISC_MAC):
+            return 100;
+        default:
+            return TAPPING_TERM;
+    }
+}
 
 
-/* tap dance */
-/*
 typedef enum {
     TD_NONE,
     TD_UNKNOWN,
@@ -97,8 +97,8 @@ typedef struct {
 
 td_state_t cur_dance(tap_dance_state_t *state);
 
-void cm_finished(tap_dance_state_t *state, void *user_data);
-void cm_reset(tap_dance_state_t *state, void *user_data);
+void misc_finished(tap_dance_state_t *state, void *user_data);
+void misc_reset(tap_dance_state_t *state, void *user_data);
 */
 
 
@@ -118,18 +118,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 */
 [_MAIN] = LAYOUT_ortho_4x12(
   KC_Q,      KC_W,         KC_F,         KC_P,         KC_G,    _______,  _______,      KC_J,  KC_M,         KC_U,         KC_Y,            KC_BSPC,
-  KC_A,      KC_R,         KC_S,         KC_T,         KC_D,    _______,  _______,      KC_H,  KC_N,         KC_E,         KC_I,            KC_O,
-  MO(_MISC), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), KC_B,    _______,  _______,      KC_Z,  LGUI_T(KC_L), LALT_T(KC_K), LCTL_T(KC_TAB),  KC_ENT,
+  KC_A,      LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T), KC_D,    _______,  _______,      KC_H,  LGUI_T(KC_N), LALT_T(KC_E), LCTL_T(KC_I),    KC_O,
+  MO(MISC),      LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), KC_B,    _______,  _______,      KC_Z,  LGUI_T(KC_L), LALT_T(KC_K), LCTL_T(KC_TAB),  KC_ENT,
   _______,   _______,      _______,      _______,      LOWER,   KC_SPC,   KC_LSFT,      RAISE, _______,      _______,      _______,         _______
 ),
 
 /* LOWER
 ,-------------------------------------------------.                        ,-------------------------------------------------.
-|   ENT   |  CAPS   |  LCTL   |  LALT   |  LGUI   |                        |         |         |         |         |  BSPC   |
+|   ENT   |  CAPS   |  LCTL   |  LALT   |  LGUI   |                        |         |         |    [    |    ]    |  BSPC   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
 |   ESC   |   HM    |   UP    |   ED    |         |                        |    _    |    (    |    )    |    {    |    }    |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |  LEFT   |  DOWN   |  RGHT   |         |                        |         |    <    |    >    |    [    |    ]    |
+|         |  LEFT   |  DOWN   |  RGHT   |         |                        |         |    /    |    \    |         |         |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |   SPC   |    |  LSFT   |         |
                                         `-------------------'    `-------------------'
@@ -144,11 +144,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* RAISE
 ,-------------------------------------------------.                        ,-------------------------------------------------.
-|    `    |    &    |    *    |    ~    |         |                        |         |    7    |    8    |    9    |  BSPC   |
+|    `    |    &    |    *    |    ~    |    ,    |                        |         |    7    |    8    |    9    |  BSPC   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|   ESC   |    $    |    %    |    ^    |         |                        |    +    |    4    |    5    |    6    |    0    |
+|   ESC   |    $    |    %    |    ^    |    .    |                        |    +    |    4    |    5    |    6    |    0    |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |    !    |    @    |    #    |    =    |                        |    -    |    1    |    2    |    3    |    =    |
+|         |    !    |    @    |    #    |    =    |                        |    -    |    1    |    2    |    3    |   DEL   |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |   SPC   |    |  LSFT   |         |
                                         `-------------------'    `-------------------'
@@ -162,11 +162,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* ADJUST
 ,-------------------------------------------------.                        ,-------------------------------------------------.
-|         |   F1    |   F2    |   F3    |   F4    |                        |  VOLD   |  VOLU   |  MUTE   | CG_SWAP | CG_NORM |
+|   F1    |   F2    |   F3    |   F4    |         |                        |  VOLD   |  VOLU   |  MUTE   | CG_SWAP | CG_NORM |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |   F5    |   F6    |   F7    |   F8    |                        | RBTVAR  |         |         | SCRSHT  |  MOUSE  |
+|   F5    |   F6    |   F7    |   F8    |         |                        | RBTVAR  |         |         | SCRSHT  |         |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |   F9    |   F10   |   F11   |   F12   |                        |RBTNEWVAR|         |         |SCRSHTSV |  DOCMD  |
+|   F9    |   F10   |   F11   |   F12   |         |                        |RBTNEWVAR|         |         |SCRSHTSV |  DOCMD  |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |         |    |         |         |
                                         `-------------------'    `-------------------'
@@ -174,7 +174,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] =  LAYOUT_ortho_4x12(
   KC_F1,   KC_F2,     KC_F3,   KC_F4,   _______,    _______, _______,         KC_VOLD,   KC_VOLU,  KC_MUTE,  CG_SWAP,    CG_NORM,
   KC_F5,   KC_F6,     KC_F7,   KC_F8,   _______,    _______, _______,         RBTVAR,    _______,  _______,  SCRSHT,     _______,
-  KC_F9,   KC_F10,    KC_F11,  KC_F12,  _______,    _______, _______,         RBTNEWVAR, _______,  _______,  SCRSHTSV,   DOCMD,
+  KC_F9,   KC_F10,    KC_F11,  KC_F12,  _______,    _______, _______,         RBTNEWVAR, _______,  _______,  SCRSHTSV,   _______,
   _______, _______, _______,   _______, _______,    _______, _______,         _______,   _______,  _______,  _______,    _______
 ),
 
@@ -182,60 +182,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* MISC
 ,-------------------------------------------------.                        ,-------------------------------------------------.
-|         |         | QK_LEAD |  MODS   |  REDO   |                        |         |    ?    |    |    |         |  BSPC   |
+|         |         | QK_LEAD |  MODS   |         |                        |         |    ?    |    |    |         |  BSPC   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|   ALL   |         |  SAVE   |         |  FIND   |                        |         |    /    |    \    |    ;    |    '    |
+|         |         |  SAVE   |         |         |                        |         |    /    |    \    |    ;    |    '    |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |  UNDO   |   CUT   |  COPY   |  PASTE  |                        |         |    ,    |    .    |    :    |    "    |
+|         |         |         |         |         |                        |         |    ,    |    .    |    :    |    "    |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |   SPC   |    |  LSFT   |         |
                                         `-------------------'    `-------------------'
  */
 [_MISC] =  LAYOUT_ortho_4x12(
-  _______, _______, QK_LEAD, _______,  REDO,        _______, _______,       _______,   KC_QUES,  KC_PIPE,  KC_DQUO,  KC_BSPC,
-  ALL,     _______, SAVE,    _______,  FIND,        _______, _______,       _______,   KC_LABK,  KC_RABK,  KC_SCLN,  KC_QUOT,
-  _______, UNDO,    CUT,     COPY,     PASTE,       _______, _______,       _______,   KC_COMM,  KC_DOT,   KC_COLN,  _______,
+  _______, _______, QK_LEAD, _______,  _______,        _______, _______,       _______,   KC_QUES,  KC_PIPE,  KC_DQUO,  KC_BSPC,
+  _______, _______, KC_SLSH, KC_BSLS,  _______,        _______, _______,       _______,   KC_LABK,  KC_RABK,  KC_SCLN,  KC_QUOT,
+  _______, _______, _______, _______,  _______,     _______, _______,       _______,   KC_COMM,  KC_DOT,   KC_COLN,  _______,
   _______, _______, _______, _______,  _______,     KC_SPC,  KC_LSFT,       _______,   _______,  _______,  _______,  _______
-),
-
-
-/* DOCMD
-,-------------------------------------------------.                        ,-------------------------------------------------.
-|         |  DELLN  |  CPLN   |  PSTUP  |         |                        |  REDO   | DELBAK  |         | DELFWD  |  UNDO   |
-|---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|  RTRN   |  CUTLN  | JUMPUP  |  PSTDN  |         |                        |         | CUTBAK  | MVLNUP  | CUTFWD  |   CUT   |
-|---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         | JUMPLT  | JUMPDN  | JUMPRT  |         |                        |  COPY   | HLTBAK  | MVLNDN  | HLTFWD  |  PASTE  |
-`---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
-                                        |   NAV   |  LSFT   |    |  LSFT   |  RTRN   |
-                                        `-------------------'    `-------------------'
- */
-[_DOCMD] =  LAYOUT_ortho_4x12(
-  _______, DELLN,   CPLN,      PSTUP,   _______,       _______,  _______,       REDO,    DELBAK,  _______,   DELFWD,   UNDO,
-  RTRN,    CUTLN,   KC_PGUP,   PSTDN,   _______,       _______,  _______,       _______, CUTBAK,  MVLNUP,    CUTFWD,   CUT,
-  _______, JUMPLT,  KC_PGDN,   JUMPRT,  _______,       _______,  _______,       COPY,    HLTBAK,  MVLNDN,    HLTFWD,   PASTE,
-  _______, _______, _______,   _______, NAV,           KC_LSFT,  KC_LSFT,       RTRN,    _______,  _______,  _______,  _______
-),
-
-
-/* NAV
-,-------------------------------------------------.                        ,-------------------------------------------------.
-|         |  DELLN  |  CPLN   |  PSTUP  |         |                        |         | DELBAK  |         | DELFWD  |         |
-|---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|  RTRN   |   HM    |   UP    |   ED    |         |                        |         | CUTBAK  | MVLNUP  | CUTFWD  |         |
-|---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |  LEFT   |  DOWN   |  RGHT   |         |                        |         | HLTBAK  | MVLNDN  | HLTFWD  |         |
-`---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
-                                        |         |  LSFT   |    |  LSFT   |  RTRN   |
-                                        `-------------------'    `-------------------'
- */
-[_NAV] =  LAYOUT_ortho_4x12(
-  _______, DELLN,     CPLN,      PSTUP,   _______,      _______, _______,         _______,  DELBAK,  _______,  DELFWD,  _______,
-  RTRN,    HM,        KC_UP,     ED,      _______,      _______, _______,         _______,  CUTBAK,  MVLNUP,   CUTFWD,  _______,
-  _______, KC_LEFT,   KC_DOWN,   KC_RGHT, _______,      _______, _______,         _______,  HLTBAK,  MVLNDN,   HLTFWD,  _______,
-  _______, _______,   _______,   _______, _______,      KC_LSFT, KC_LSFT,         RTRN,    _______,  _______,  _______,  _______
 )
-
 
 };
 
@@ -437,20 +398,20 @@ void leader_end_user(void) {
       copy_line();       
     }
     else if (leader_sequence_one_key(KC_L)) {
-      SEND_STRING("Log to Console    ");
+      SEND_STRING("Log to Console  ");
     }
     else if (leader_sequence_two_keys(KC_S, KC_E)) {
-      SEND_STRING("Set Test Variable    ${}    ${}");
-      for (int j = 0; j < 8; j++){
+      SEND_STRING("Set Test Variable  ${}  ${}");
+      for (int j = 0; j < 6; j++){
         tap_code(KC_LEFT);
       }
     }
     else if (leader_sequence_two_keys(KC_C, KC_O)) {
-      SEND_STRING("Control Window    ${}");
+      SEND_STRING("Control Window  ${}");
       tap_code(KC_LEFT);
     }
     else if (leader_sequence_one_key(KC_S)) {
-        for (int i = 0; i < 20; i++){
+        for (int i = 0; i < 50; i++){
           SEND_STRING(SS_TAP(X_UP));
         }
     }
@@ -460,12 +421,12 @@ void leader_end_user(void) {
         }
     }
     else if (leader_sequence_three_keys(KC_S, KC_S, KC_S)) {
-        for (int i = 0; i < 250; i++){
+        for (int i = 0; i < 150; i++){
           SEND_STRING(SS_TAP(X_UP));
         }
     } 
     else if (leader_sequence_one_key(KC_C)) {
-        for (int i = 0; i < 20; i++){
+        for (int i = 0; i < 50; i++){
           SEND_STRING(SS_TAP(X_DOWN));
         }
     }
@@ -475,7 +436,7 @@ void leader_end_user(void) {
         }
     } 
     else if (leader_sequence_three_keys(KC_C, KC_C, KC_C)) {
-        for (int i = 0; i < 250; i++){
+        for (int i = 0; i < 150; i++){
           SEND_STRING(SS_TAP(X_DOWN));
         }
     } 
@@ -531,24 +492,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case DOCMD:
-      if (record->event.pressed) {
-        layer_on(_DOCMD);
-      }
-      return false;
-      break;
     case RTRN:
       if (record->event.pressed) {
         layer_clear();
         layer_on(_MAIN);
-      }
-      return false;
-      break;
-    case NAV:
-      if (record->event.pressed) {
-        layer_on(_NAV);
-      } else {
-        layer_off(_NAV);
       }
       return false;
       break;
@@ -858,7 +805,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
-
 /*
 td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
@@ -884,30 +830,30 @@ td_state_t cur_dance(tap_dance_state_t *state) {
 }
 
 // Create an instance of 'td_tap_t' for the 'x' tap dance.
-static td_tap_t cmtap_state = {
+static td_tap_t misctap_state = {
     .is_press_action = true,
     .state = TD_NONE
 };
 
-void cm_finished(tap_dance_state_t *state, void *user_data) {
-    cmtap_state.state = cur_dance(state);
-    switch (cmtap_state.state) {
-        case TD_SINGLE_TAP: register_code(KC_COMM); break;
-        case TD_SINGLE_HOLD: register_code16(S(KC_COMM)); break;
+void misc_finished(tap_dance_state_t *state, void *user_data) {
+    misctap_state.state = cur_dance(state);
+    switch (misctap_state.state) {
+        case TD_SINGLE_HOLD: layer_on(_MISC); break;
+        case TD_DOUBLE_TAP: layer_on(_MACRO); break;
         default: break;
     }
 }
 
-void cm_reset(tap_dance_state_t *state, void *user_data) {
-    switch (cmtap_state.state) {
-        case TD_SINGLE_TAP: unregister_code(KC_COMM); break;
-        case TD_SINGLE_HOLD: unregister_code16(S(KC_COMM)); break;
+void misc_reset(tap_dance_state_t *state, void *user_data) {
+    switch (misctap_state.state) {
+        case TD_SINGLE_HOLD: layer_off(_MISC); break;
+        //case TD_DOUBLE_TAP: layer_off(_MACRO); break;
         default: break;
     }
-    cmtap_state.state = TD_NONE;
+    misctap_state.state = TD_NONE;
 }
 
 tap_dance_action_t tap_dance_actions[] = {
-    [CM_BRAK] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, cm_finished, cm_reset),
+    [MISC_MAC] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, misc_finished, misc_reset),
 };
 */
