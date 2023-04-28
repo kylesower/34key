@@ -3,6 +3,7 @@
 #ifdef LAYOUT_PRINTER
 #include "layout.h"
 #endif
+#include "very_secure_string.h"
 
 
 
@@ -25,6 +26,7 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   MISC,
+  MISC_OSL,
   RTRN,
   HM,
   ED,
@@ -119,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MAIN] = LAYOUT_ortho_4x12(
   KC_Q,      KC_W,         KC_F,         KC_P,         KC_G,    _______,  _______,      KC_J,  KC_M,         KC_U,         KC_Y,            KC_BSPC,
   KC_A,      LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T), KC_D,    _______,  _______,      KC_H,  LGUI_T(KC_N), LALT_T(KC_E), LCTL_T(KC_I),    KC_O,
-  MO(MISC),      LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), KC_B,    _______,  _______,      KC_Z,  LGUI_T(KC_L), LALT_T(KC_K), LCTL_T(KC_TAB),  KC_ENT,
+  MO(_MISC), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), KC_B,    _______,  _______,      KC_Z,  LGUI_T(KC_L), LALT_T(KC_K), LCTL_T(KC_TAB),  KC_ENT,
   _______,   _______,      _______,      _______,      LOWER,   KC_SPC,   KC_LSFT,      RAISE, _______,      _______,      _______,         _______
 ),
 
@@ -174,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] =  LAYOUT_ortho_4x12(
   KC_F1,   KC_F2,     KC_F3,   KC_F4,   _______,    _______, _______,         KC_VOLD,   KC_VOLU,  KC_MUTE,  CG_SWAP,    CG_NORM,
   KC_F5,   KC_F6,     KC_F7,   KC_F8,   _______,    _______, _______,         RBTVAR,    _______,  _______,  SCRSHT,     _______,
-  KC_F9,   KC_F10,    KC_F11,  KC_F12,  _______,    _______, _______,         RBTNEWVAR, _______,  _______,  SCRSHTSV,   _______,
+  KC_F9,   KC_F10,    KC_F11,  KC_F12,  _______,    _______, _______,         RBTNEWVAR, _______,  _______,  SCRSHTSV,   QK_LEAD,
   _______, _______, _______,   _______, _______,    _______, _______,         _______,   _______,  _______,  _______,    _______
 ),
 
@@ -182,19 +184,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* MISC
 ,-------------------------------------------------.                        ,-------------------------------------------------.
-|         |         | QK_LEAD |  MODS   |         |                        |         |    ?    |    |    |         |  BSPC   |
+|         |         |    |    |         |         |                        |         |    ?    |    !    |    "    |  BSPC   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |         |  SAVE   |         |         |                        |         |    /    |    \    |    ;    |    '    |
+|         |         |    \    |    /    |         |                        |    +    |    <    |    >    |    :    |    '    |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |         |         |         |         |                        |         |    ,    |    .    |    :    |    "    |
+|         |         |         |         |    =    |                        |    -    |    ,    |    .    |    ;    |         |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |   SPC   |    |  LSFT   |         |
                                         `-------------------'    `-------------------'
  */
 [_MISC] =  LAYOUT_ortho_4x12(
-  _______, _______, QK_LEAD, _______,  _______,        _______, _______,       _______,   KC_QUES,  KC_PIPE,  KC_DQUO,  KC_BSPC,
-  _______, _______, KC_SLSH, KC_BSLS,  _______,        _______, _______,       _______,   KC_LABK,  KC_RABK,  KC_SCLN,  KC_QUOT,
-  _______, _______, _______, _______,  _______,     _______, _______,       _______,   KC_COMM,  KC_DOT,   KC_COLN,  _______,
+  _______, _______, KC_PIPE, _______,  _______,     _______, _______,       _______,   KC_QUES,  KC_EXLM,  KC_DQUO,  KC_BSPC,
+  _______, _______, KC_BSLS, KC_SLSH,  _______,     _______, _______,       KC_PLUS,   KC_LABK,  KC_RABK,  KC_COLN,  KC_QUOT,
+  _______, _______, _______, _______,  KC_EQUAL,    _______, _______,       KC_MINUS,  KC_COMM,  KC_DOT,   KC_SCLN,  _______,
   _______, _______, _______, _______,  _______,     KC_SPC,  KC_LSFT,       _______,   _______,  _______,  _______,  _______
 )
 
@@ -442,6 +444,9 @@ void leader_end_user(void) {
     } 
     else if (leader_sequence_three_keys(KC_L, KC_A, KC_Y)) {
         print_layout();
+    }
+    else if (leader_sequence_three_keys(KC_F, KC_S, KC_T)) {
+        SEND_STRING(very_secure_string);
     }
     /*
     else if (leader_sequence_four_keys(KC_L, KC_A, KC_Y, KC_P)) {
