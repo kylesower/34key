@@ -121,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_MAIN] = LAYOUT_ortho_4x12(
   KC_Q,      KC_W,         KC_F,         KC_P,         KC_G,    _______,  _______,      KC_J,  KC_M,         KC_U,         KC_Y,            KC_BSPC,
   KC_A,      LCTL_T(KC_R), LALT_T(KC_S), LGUI_T(KC_T), KC_D,    _______,  _______,      KC_H,  LGUI_T(KC_N), LALT_T(KC_E), LCTL_T(KC_I),    KC_O,
-  MO(_MISC), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), KC_B,    _______,  _______,      KC_Z,  LGUI_T(KC_L), LALT_T(KC_K), LCTL_T(KC_TAB),  KC_ENT,
+  MO(_MISC), LCTL_T(KC_X), LALT_T(KC_C), LGUI_T(KC_V), KC_B,    _______,  _______,      KC_Z,  LGUI_T(KC_L), LALT_T(KC_K), LCTL_T(KC_TAB),  KC_LCTL,
   _______,   _______,      _______,      _______,      LOWER,   KC_SPC,   KC_LSFT,      RAISE, _______,      _______,      _______,         _______
 ),
 
@@ -137,29 +137,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                         `-------------------'    `-------------------'
  */
 [_LOWER] = LAYOUT_ortho_4x12(
-  KC_ENT,  KC_CAPS,  KC_LCTL,  KC_LALT, KC_LGUI,       _______,  _______,        _______,  _______, KC_LBRC, KC_RBRC,  KC_BSPC,
-  KC_ESC,  HM,       KC_UP,    ED,      _______,       _______,  _______,        KC_UNDS,  KC_LPRN, KC_RPRN, KC_LCBR,  KC_RCBR,
-  _______, KC_LEFT,  KC_DOWN,  KC_RGHT, _______,       _______,  _______,        _______,  KC_SLSH, KC_BSLS, _______,  _______,
-  _______, _______,  _______,  _______, _______,       KC_SPC,   KC_LSFT,        _______,  _______, _______, _______,  _______
+  KC_TAB,  KC_CAPS,  KC_LCTL,  KC_LALT, KC_LGUI,         _______,  _______,        _______,  _______, KC_LBRC, KC_RBRC, KC_BSPC,
+  KC_ENT,  HM,       KC_UP,    ED,      LSFT_T(KC_ENT),  _______,  _______,        KC_UNDS,  KC_LPRN, KC_RPRN, KC_LCBR, KC_RCBR,
+  KC_ESC,  KC_LEFT,  KC_DOWN,  KC_RGHT, _______,         _______,  _______,        _______,  _______, _______, KC_TAB,  _______,
+  _______, _______,  _______,  _______, _______,         KC_SPC,   KC_LSFT,        _______,  _______, _______, _______, _______
 ),
 
 
 /* RAISE
 ,-------------------------------------------------.                        ,-------------------------------------------------.
-|    `    |    &    |    *    |    ~    |    ,    |                        |         |    7    |    8    |    9    |  BSPC   |
+|    `    |    &    |    *    |    ~    |         |                        |    +    |    ^    |    %    |    $    |  BSPC   |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|   ESC   |    $    |    %    |    ^    |    .    |                        |    +    |    4    |    5    |    6    |    0    |
+|    1    |    2    |    3    |    4    |    5    |                        |    6    |    7    |    8    |    9    |    0    |
 |---------+---------+---------+---------+---------|                        |---------+---------+---------+---------+---------|
-|         |    !    |    @    |    #    |    =    |                        |    -    |    1    |    2    |    3    |   DEL   |
+|   Esc   |    !    |    @    |    #    |    =    |                        |    -    |    ,    |    .    |         |   DEL   |
 `---------------------------------------+---------+---------.    ,---------+---------+---------------------------------------'
                                         |         |   SPC   |    |  LSFT   |         |
                                         `-------------------'    `-------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12(
-  KC_GRV,  KC_AMPR,  KC_ASTR,  KC_TILD, KC_COMM,     _______,  _______,      _______,     KC_7,     KC_8,    KC_9,    KC_BSPC,
-  KC_ESC,  KC_DLR,   KC_PERC,  KC_CIRC, KC_DOT,      _______,  _______,      KC_PLUS,     KC_4,     KC_5,    KC_6,    KC_0,
-  _______, KC_EXLM,  KC_AT,    KC_HASH, KC_EQUAL,    _______,  _______,      KC_MINUS,    KC_1,     KC_2,    KC_3,    DEL,
-  _______, _______,  _______,  _______, _______,     KC_SPC,   KC_LSFT,      _______,     _______,  _______, _______, _______
+  KC_GRV,  KC_AMPR,  KC_ASTR,  KC_TILD, QK_LEAD,   _______,  _______,      KC_PLUS,     KC_CIRC,  KC_PERC, KC_DLR,  KC_BSPC,
+  KC_1,    KC_2,     KC_3,     KC_4,    KC_5,      _______,  _______,      KC_6,        KC_7,     KC_8,    KC_9,    KC_0,
+  KC_ESC,  KC_EXLM,  KC_AT,    KC_HASH, KC_EQUAL,  _______,  _______,      KC_MINUS,    KC_COMM,  KC_DOT,  _______, DEL,
+  _______, _______,  _______,  _______, _______,   KC_SPC,   KC_LSFT,      _______,     _______,  _______, _______, _______
 ),
 
 /* ADJUST
@@ -195,8 +195,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_MISC] =  LAYOUT_ortho_4x12(
   _______, _______, KC_PIPE, _______,  _______,     _______, _______,       _______,   KC_QUES,  KC_EXLM,  KC_DQUO,  KC_BSPC,
-  _______, _______, KC_BSLS, KC_SLSH,  _______,     _______, _______,       KC_PLUS,   KC_LABK,  KC_RABK,  KC_COLN,  KC_QUOT,
-  _______, _______, _______, _______,  KC_EQUAL,    _______, _______,       KC_MINUS,  KC_COMM,  KC_DOT,   KC_SCLN,  _______,
+  _______, _______, KC_BSLS, KC_SLSH,  _______,     _______, _______,       KC_PLUS,   KC_LABK,  KC_RABK,  KC_SCLN,  KC_QUOT,
+  _______, _______, _______, _______,  KC_EQUAL,    _______, _______,       KC_MINUS,  KC_COMM,  KC_DOT,   KC_COLN,  _______,
   _______, _______, _______, _______,  _______,     KC_SPC,  KC_LSFT,       _______,   _______,  _______,  _______,  _______
 )
 

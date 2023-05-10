@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Select hand configuration */
 // #define MASTER_LEFT
 // #define EE_HANDS
-#define TAPPING_TERM 275
+#define TAPPING_TERM 350
 #define TAPPING_TERM_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT
 #define LEADER_PER_KEY_TIMING 125
