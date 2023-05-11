@@ -64,6 +64,17 @@ enum custom_keycodes {
   SCRSHTSV
 };
 
+enum unicode_names {
+    BANG,
+    IRONY,
+    SNEK
+};
+
+const uint32_t unicode_map[] PROGMEM = {
+    [BANG]  = 0x203D,  //
+    [IRONY] = 0x2E2E,  //
+    [SNEK]  = 0x1F40D, //
+};
 // Tap dance enums
 /*
 enum {
@@ -448,6 +459,28 @@ void leader_end_user(void) {
     else if (leader_sequence_three_keys(KC_F, KC_S, KC_T)) {
         SEND_STRING(very_secure_string);
     }
+    else if (leader_sequence_two_keys(KC_L, KC_A)) {
+        send_unicode_string("😤");
+    }
+    else if (leader_sequence_two_keys(KC_P, KC_P)) {
+        send_unicode_string("💩");
+    }
+    else if (leader_sequence_three_keys(KC_M, KC_O, KC_N)) {
+        send_unicode_string("🙈");
+    }
+    else if (leader_sequence_three_keys(KC_P, KC_A, KC_R)) {
+        send_unicode_string("🎉");
+    }
+    else if (leader_sequence_three_keys(KC_L, KC_A, KC_U)) {
+        send_unicode_string("😂");
+    }
+    else if (leader_sequence_three_keys(KC_M, KC_A, KC_C)) {
+        set_unicode_input_mode(UNICODE_MODE_MACOS);
+    }
+    else if (leader_sequence_three_keys(KC_L, KC_I, KC_N)) {
+        set_unicode_input_mode(UNICODE_MODE_LINUX);
+    }
+
     /*
     else if (leader_sequence_four_keys(KC_L, KC_A, KC_Y, KC_P)) {
         print_layout_pretty();

@@ -35,3 +35,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TRI_LAYER_UPPER_LAYER 3
 #define TRI_LAYER_ADJUST_LAYER 4
 #define LAYOUT_PRINTER
+#define UNICODE_SELECTED_MODES UNICODE_MODE_MACOS, UNICODE_MODE_LINUX
